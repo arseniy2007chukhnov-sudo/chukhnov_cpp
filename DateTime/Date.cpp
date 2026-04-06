@@ -2,7 +2,7 @@
 
 Date::Date(int y, int mo, int d) 
 {
-	if (y <= 9999 and y > 999)
+	if (y <= 9999 and y >=0 )
 		year = y;
 	else
 		throw DateValueExeption();
@@ -22,7 +22,7 @@ Date::Date(int y, int mo, int d)
 
 Date::Date(int y, int mo, int d, int h, int mi, int s)
 {
-	if (y <= 9999 and y > 999)
+	if (y <= 9999 and y >= 0)
 		year = y;
 	else
 		throw DateValueExeption();
@@ -58,7 +58,7 @@ void Date::to_jul()
 	int y = year + 4800 - a;
 	int m = month + 12 * a - 3;
 	jdn = day + ((153 * m + 2) / 5) + 365 * y + ((y) / 4) - 32083;
-	jd = jdn + ((hour - 12) / 24) + (month / 1440) + (sec / 86400);
+	jd = jdn + ((hour - 12) / 24) + (min / 1440) + (sec / 86400);
 }
 void Date::to_dt()
 {
@@ -70,7 +70,58 @@ void Date::to_dt()
 	month = m + 3 - 12 * (m / 10);
 	year = d - 4800 + (m / 10);
 }
-int Date::getJdn()
+int Date::get_jd() const
 {
-	int
+	return jd;
+}
+int Date::operator -(const Date& date2) const
+{
+	int raz = jdn - date2.get_jd();
+	if (raz >= 0)
+		return raz;
+	else
+		return -raz;
+}
+void Date::operator +=(int d)
+{
+	jdn += d;
+	to_dt();
+}
+bool Date::operator >(const Date& date2) const
+{
+	return jd > date2.get_jd();
+}
+bool Date::operator <=(const Date& date2) const
+{
+	return !(*this > date2);
+}
+bool Date::operator <(const Date& date2) const
+{
+	return jd < date2.get_jd();
+}
+bool Date::operator >=(const Date& date2) const
+{
+	return !(*this < date2);
+}
+bool Date::operator ==(const Date& date2) const
+{
+	return jd == date2.get_jd();
+}
+bool Date::operator !=(const Date& date2) const
+{
+	return !(*this == date2);
+}
+int Date::get_dw() const 
+{
+	return jdn % 7;
+}
+//std::istream& operator >>(std::istream& in, Date& d)
+//{
+//	in >> ;
+//	return in;
+//}
+std::ostream& operator <<(std::ostream& out, const Date& d)
+{
+	out << d.year << "-" << d.month << "-" << d.day << "T" << d.hour << ":" << d.min << ":" << d.sec<< ";";
+	return out;
 }
