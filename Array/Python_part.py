@@ -2,13 +2,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 # Для контекста создание Датафрейма:
-data = {
-    'N': [1000, 5000, 10000, 50000, 100000, 500000, 1000000],
-    'Answer': [977, 1809, 3617, 34465, 68929, 475713, 951425],
-    'Time (miliseconds)': [1, 15, 66, 1630, 6395, 173038, 720751]
-}
-
-df = pd.DataFrame(data)
+df = pd.read_csv("algorithm_performance.csv")
 
 # Собственно расчёт точек по теоретической O(N^2) (Используя среднее значение)
 
