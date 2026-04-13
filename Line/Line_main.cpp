@@ -13,7 +13,7 @@ int main()
 	cin >> N;
 	cout << "k = ";
 	cin >> k;
-	LineList<int> joseph;
+	LineListCyc<int> joseph;
 	joseph.insertFirst(1);
 	LineListElem<int>* current = joseph.getStart();
 	for (int i = 2; i <= N; i++) {
