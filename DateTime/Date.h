@@ -19,6 +19,7 @@ public:
 	Date(int y, int mo, int d, int h, int mi, int s);
 	/*Date(char* string);*/
 	int get_jd() const;
+	Date& operator =(const Date& date2);
 	int operator -(const Date& date2) const;
 	void operator +=(int d);
 	bool operator >(const Date& date2) const;
@@ -30,4 +31,5 @@ public:
 	//friend std::istream& operator >>(std::istream& in, Date& d);
 	friend std::ostream& operator <<(std::ostream& out, const Date& d);
 	int get_dw() const;
+	Date get_easter() const; // Выводит следующую дату Пасхи
 };

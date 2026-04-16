@@ -74,6 +74,16 @@ int Date::get_jd() const
 {
 	return jd;
 }
+Date& Date::operator =(const Date& date2) {
+	year = date2.year;
+	month = date2.month;
+	day = date2.day;
+	hour = date2.hour;
+	min = date2.min;
+	sec = date2.sec;
+	to_jul();
+	return *this;
+}
 int Date::operator -(const Date& date2) const
 {
 	int raz = jdn - date2.get_jd();
@@ -115,13 +125,30 @@ int Date::get_dw() const
 {
 	return jdn % 7;
 }
-//std::istream& operator >>(std::istream& in, Date& d)
-//{
-//	in >> ;
-//	return in;
-//}
+
 std::ostream& operator <<(std::ostream& out, const Date& d)
 {
 	out << d.year << "-" << d.month << "-" << d.day << "T" << d.hour << ":" << d.min << ":" << d.sec<< ";";
 	return out;
+}
+Date Date::get_easter() const {
+	int a = year % 19;
+	int b = year % 4;
+	int c = year % 7;
+	int d = (19 * a + 15) % 30;
+	int e = (2 * b + 4 * c + 6 * d + 6) % 7;
+	Date Easter(year, 3, 22);
+	Easter += (d + e + 13);
+	if (*this > Easter) {
+		int next_year = year + 1;
+		a = next_year % 19;
+		b = next_year % 4;
+		c = next_year % 7;
+		d = (19 * a + 15) % 30;
+		e = (2 * b + 4 * c + 6 * d + 6) % 7;
+		Date new_Easter(next_year, 3, 22);
+		new_Easter += (d + e + 13);
+		return new_Easter;
+	}
+	return Easter;
 }
