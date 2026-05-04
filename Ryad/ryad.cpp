@@ -123,9 +123,9 @@ void Field::print() const
 void Field::printResult() const
 {
     if (winner == RED)
-        cout << "Ïîáåäèë êðàñíûé" << endl;
+        cout << "ÐŸÐ¾Ð±ÐµÐ´Ð¸Ð» ÐºÑ€Ð°ÑÐ½Ñ‹Ð¹" << endl;
     else if (winner == YELLOW)
-        cout << "Ïîáåäèë æåëòûé" << endl;
+        cout << "ÐŸÐ¾Ð±ÐµÐ´Ð¸Ð» Ð¶Ñ‘Ð»Ñ‚Ñ‹Ð¹" << endl;
     else
-        cout << "Íè÷üÿ" << endl;
+        cout << "ÐÐ¸Ñ‡ÑŒÑ" << endl;
 }
