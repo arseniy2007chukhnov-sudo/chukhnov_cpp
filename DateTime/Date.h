@@ -1,6 +1,6 @@
 #pragma once
 #include <iostream>
-
+#include <string>
 class DateValueExeption {};
 class Date {
 private:
@@ -17,7 +17,7 @@ public:
 	int sec;
 	Date(int y, int mo, int d);
 	Date(int y, int mo, int d, int h, int mi, int s);
-	/*Date(char* string);*/
+	Date(const std::string& str);
 	int get_jd() const;
 	Date& operator =(const Date& date2);
 	int operator -(const Date& date2) const;
@@ -28,8 +28,7 @@ public:
 	bool operator >=(const Date& date2) const;
 	bool operator ==(const Date& date2) const;
 	bool operator !=(const Date& date2) const;
-	//friend std::istream& operator >>(std::istream& in, Date& d);
 	friend std::ostream& operator <<(std::ostream& out, const Date& d);
-	int get_dw() const;
+	int get_dw() const; // Метод, который возвращает день недели
 	Date get_easter() const; // Выводит следующую дату Пасхи
 };

@@ -1,4 +1,7 @@
 #include "Date.h"
+#include <sstream>
+#include <vector>
+#include <stdexcept>
 
 Date::Date(int y, int mo, int d) 
 {
@@ -48,10 +51,42 @@ Date::Date(int y, int mo, int d, int h, int mi, int s)
 		throw DateValueExeption();
 	to_jul();
 }
-//Date::Date(char* string)
-//{
-//	
-//}
+Date::Date(const std::string& str) {
+	std::string date_part, time_part;
+	size_t t_pos = str.find('T');
+	if (t_pos != std::string::npos) {
+		date_part = str.substr(0, t_pos);
+		time_part = str.substr(t_pos + 1);
+	}
+	else {
+		date_part = str;
+		time_part = "";
+	}
+
+	std::vector<int> d_vals, t_vals;
+	std::string token;
+	std::istringstream d_ss(date_part), t_ss(time_part);
+
+	while (std::getline(d_ss, token, '-')) d_vals.push_back(std::stoi(token));
+	if (!time_part.empty()) {
+		while (std::getline(t_ss, token, ':')) t_vals.push_back(std::stoi(token));
+	}
+
+	if (d_vals.size() != 3) throw DateValueExeption();
+	if (!time_part.empty() && t_vals.size() != 3) throw DateValueExeption();
+
+	year = d_vals[0]; month = d_vals[1]; day = d_vals[2];
+	hour = time_part.empty() ? 0 : t_vals[0];
+	min = time_part.empty() ? 0 : t_vals[1];
+	sec = time_part.empty() ? 0 : t_vals[2];
+
+	if (year < 0 && year > 9999 && month < 1 && month > 12 && day < 1 && day > 31 &&
+		hour < 0 && hour > 23 && min < 0 && min > 59 && sec < 0 && sec > 59) {
+		throw DateValueExeption();
+	}
+	to_jul();
+}
+
 void Date::to_jul()
 {
 	int a = (14 - month) / 12;
@@ -69,6 +104,7 @@ void Date::to_dt()
 	day = e - ((153 * m + 2) / 5) + 1;
 	month = m + 3 - 12 * (m / 10);
 	year = d - 4800 + (m / 10);
+	hour = 0; min = 0; sec = 0;
 }
 int Date::get_jd() const
 {
@@ -121,7 +157,7 @@ bool Date::operator !=(const Date& date2) const
 {
 	return !(*this == date2);
 }
-int Date::get_dw() const 
+int Date::get_dw() const
 {
 	return jdn % 7;
 }
@@ -131,7 +167,7 @@ std::ostream& operator <<(std::ostream& out, const Date& d)
 	out << d.year << "-" << d.month << "-" << d.day << "T" << d.hour << ":" << d.min << ":" << d.sec<< ";";
 	return out;
 }
-Date Date::get_easter() const {
+Date Date::get_easter() const {  
 	int a = year % 19;
 	int b = year % 4;
 	int c = year % 7;
