@@ -1,6 +1,6 @@
 #include "graph.h"
 
-// === Node ===
+// Node
 Node::Node(const std::string& aname) : name(aname) {}
 const std::string& Node::getName() const {
     return name;
@@ -19,7 +19,7 @@ void Node::removeNeighbour(Node* n) {
     neighbours.erase(n);
 }
 
-// === Graph ===
+// Graph
 void Graph::addNode(Node* n) {
     nodes.insert(n); 
 }
@@ -48,16 +48,24 @@ void Graph::removeEdge(Node* b, Node* e) {
 
 std::map<int, Node*> loadGraphFromFile(Graph& g, const std::string& filename) {
     std::ifstream file(filename);
-    if (!file.is_open()) throw std::runtime_error("Не удалось открыть файл: " + filename);
+    if (!file.is_open()) 
+        throw std::runtime_error("Не удалось открыть файл: " + filename);
 
     std::map<int, Node*> nodeMap;
     std::string header;
-    std::getline(file, header); // Пропускаем строку заголовка "Source\tTarget"
+    std::getline(file, header); // Пропускаем строку заголовка
 
     int u, v;
     while (file >> u >> v) {
-        if (!nodeMap.count(u)) { nodeMap[u] = new Node(std::to_string(u)); g.addNode(nodeMap[u]); }
-        if (!nodeMap.count(v)) { nodeMap[v] = new Node(std::to_string(v)); g.addNode(nodeMap[v]); }
+        if (!nodeMap.count(u)) {
+            nodeMap[u] = new Node(std::to_string(u));
+            g.addNode(nodeMap[u]); 
+        }
+        if
+            (!nodeMap.count(v)) {
+            nodeMap[v] = new Node(std::to_string(v));
+            g.addNode(nodeMap[v]);
+        }
         g.addEdge(nodeMap[u], nodeMap[v], 1); // В файле нет весов, ставим 1
     }
     return nodeMap;
@@ -67,7 +75,7 @@ void cleanupGraph(Graph& g) {
     for (auto node : g) delete node;
 }
 
-// === BFS ===
+// BFS
 BFS::BFS(const Graph& g) : graph(g) {}
 bool BFS::connected(Node* begin, Node* end) {
     if (!begin || !end) return false;
@@ -84,7 +92,7 @@ bool BFS::connected(Node* begin, Node* end) {
     } return false;
 }
 
-// === DFS ===
+// DFS
 DFS::DFS(const Graph& g) : graph(g) {}
 bool DFS::connected(Node* begin, Node* end) {
     visited.clear(); return connectedRecursive(begin, end);
@@ -99,7 +107,7 @@ bool DFS::connectedRecursive(Node* cur, Node* end) {
 }
 
 
-// === Dijkstra ===
+// Dijkstra
 MarkedNode::MarkedNode(Node* a, int m, Node* p) : node(a), mark(m), prev(p) {}
 bool PriorityQueue::empty() const {
     return nodes.empty();

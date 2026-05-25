@@ -15,7 +15,6 @@ using node_iterator = std::set<Node*>::const_iterator;
 class Node {
     std::string name;
     std::map<Node*, int> neighbours;
-
     void addNeighbour(Node* neighbour, int weight);
     void removeNeighbour(Node* neighbour);
 public:

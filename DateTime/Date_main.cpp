@@ -3,7 +3,7 @@
 #include <locale.h>
 #include <algorithm>
 using namespace std;
-void quickSort(Date arr[], int low, int high);
+void quickSort(Date *arr, int first, int last);
 int main()
 {
     setlocale(LC_ALL, "Russian");
@@ -58,19 +58,19 @@ int main()
     cout << endl;
     return 0;
 }
-void quickSort(Date arr[], int low, int high) {
-    if (low < high) {
-        Date pivot = arr[high];
-        int i = low - 1;
-        for (int j = low; j <= high - 1; j++) {
+void quickSort(Date *arr, int first, int last) {
+    if (first < last) {
+        Date pivot = arr[last];
+        int i = first - 1;
+        for (int j = first; j <= last - 1; j++) {
             if (arr[j] < pivot) {
                 i++;
                 std::swap(arr[i], arr[j]);
             }
         }
-        std::swap(arr[i + 1], arr[high]);
+        std::swap(arr[i + 1], arr[last]);
         int pi = i + 1;
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
+        quickSort(arr, first, pi - 1);
+        quickSort(arr, pi + 1, last);
     }
 }
