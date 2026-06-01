@@ -164,7 +164,7 @@ int Date::get_dw() const
 
 std::ostream& operator <<(std::ostream& out, const Date& d)
 {
-	out << d.year << "-" << d.month << "-" << d.day << "T" << d.hour << ":" << d.min << ":" << d.sec<< ";";
+	out << d.year << "-" << (d.month < 10 ? "0" : "") << d.day << "-" << (d.month < 10 ? "0" : "") << d.day << "T" << (d.hour < 10 ? "0" : "") << d.hour << ":" << (d.min < 10 ? "0" : "") << d.min << ":" << (d.sec < 10 ? "0" : "") << d.sec << ";";
 	return out;
 }
 Date Date::get_easter() const {  

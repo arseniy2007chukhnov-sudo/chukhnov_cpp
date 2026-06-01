@@ -10,9 +10,8 @@ int main()
     Date a(2000, 4, 1), b(2001, 12, 15, 23, 54, 33);
     cout << "Тест разницы дат(Должно быть чуть меньше двух лет):" << endl;
     cout << a - b << endl;
-    a += 2;
     cout << "Тест(прибавление двух дней к дате a):" << endl;
-
+    a += 2;
     cout << a.day << endl;
     cout << "Тест формата вывода:" << endl;
 
@@ -30,13 +29,13 @@ int main()
     Date c(2026, 6, 12);
     cout << c.get_easter() << endl;
 
-    cout << "\nТест строкового конструктора: " << endl;
+    cout << "Тест строкового конструктора: " << endl;
     Date d1("1995-01-01");
     Date d2("2023-12-25T14:30:00");
     cout << "Дата из строки (только дата): " << d1 << endl;
     cout << "Дата из строки (дата+время): " << d2 << endl;
 
-    cout << "\nБыстрая сортировка дат из Приложения №1: " << endl;
+    cout << "Быстрая сортировка дат из Приложения №1: " << endl;
     const int N = 26;
     Date dates[N] = {
         Date("1995-01-01"), Date("1994-04-26"), Date("1992-12-05"), Date("1994-07-12"), Date("1993-09-11"),
@@ -48,13 +47,15 @@ int main()
     };
 
     cout << "До сортировки:" << endl;
-    for (int i = 0; i < N; ++i) cout << dates[i] << " ";
-    cout << "\n\n";
+    for (int i = 0; i < N; ++i)
+        cout << dates[i] << " ";
+    cout << endl;
 
     quickSort(dates, 0, N - 1);
 
     cout << "После сортировки:" << endl;
-    for (int i = 0; i < N; ++i) cout << dates[i] << " ";
+    for (int i = 0; i < N; ++i) 
+        cout << dates[i] << " ";
     cout << endl;
     return 0;
 }

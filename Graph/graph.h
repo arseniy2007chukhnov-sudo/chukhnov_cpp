@@ -43,6 +43,7 @@ public:
 std::map<int, Node*> loadGraphFromFile(Graph& g, const std::string& filename);
 void cleanupGraph(Graph& g);
 
+// BFS è DFS
 class BFS {
     const Graph& graph;
 public:
